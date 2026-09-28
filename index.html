@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuffie OS — Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --glass: rgba(255,255,255,.16);
+            --glass-border: rgba(255,255,255,.28);
+            --accent: #b19ffb;
+            --bg-win: rgba(18,18,22,.92);
+        }
+        body {
+            width: 100vw; height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://u.cubeupload.com/zmonochrome/1405375.png') no-repeat center/cover;
+            overflow: hidden; color: #fff;
+        }
+        body::before {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(0,0,0,.22); backdrop-filter: blur(6px); z-index: 0;
+        }
+
+        /* Lockscreen */
+        .lockscreen {
+            position: fixed; inset: 0; z-index: 9999; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: url('https://u.cubeupload.com/zmonochrome/1405375.png') no-repeat center/cover;
+            transition: transform .7s cubic-bezier(.85,0,.15,1);
+        }
+        .lockscreen::before { content:''; position:absolute; inset:0; background:rgba(0,0,0,.28); backdrop-filter:blur(10px); }
+        .lockscreen.unlocked { transform: translateY(-110%); pointer-events:none; }
+        .lock-clock { font-family:'Share Tech Mono',monospace; font-size:6.5rem; font-weight:700; text-shadow:0 4px 20px #000; z-index:1; }
+        .lock-date { font-size:1.4rem; font-weight:300; margin-top:8px; z-index:1; text-transform:capitalize; }
+        .lock-hint { position:absolute; bottom:50px; letter-spacing:2px; opacity:.7; animation:pulse 2s infinite; z-index:1; font-size:.9rem; }
+        @keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:.95} }
+
+        .desktop { position:relative; z-index:2; width:100%; height:100%; }
+
+        /* Sidebar */
+        .sidebar {
+            position:absolute; left:18px; top:50%; transform:translateY(-50%);
+            display:flex; flex-direction:column; align-items:center; gap:16px;
+            padding:18px 12px; width:64px; border-radius:36px;
+            background:var(--glass); backdrop-filter:blur(20px) saturate(180%);
+            border:1px solid var(--glass-border); z-index:20;
+        }
+        .sidebar-btn {
+            width:42px; height:42px; border-radius:50%; background:rgba(0,0,0,.7);
+            color:#fff; display:flex; align-items:center; justify-content:center;
+            cursor:pointer; transition:.2s; text-decoration:none;
+        }
+        .sidebar-btn:hover { transform:scale(1.12); background:#000; }
+        .sidebar-btn.search { background:rgba(255,255,255,.85); color:#222; }
+
+        /* Desktop icons */
+        .desk-icons {
+            position:absolute; left:100px; top:40px; display:flex; flex-direction:column; gap:18px; z-index:5;
+        }
+        .desk-icon {
+            width:78px; text-align:center; cursor:pointer; user-select:none;
+            transition: transform .2s;
+        }
+        .desk-icon:hover { transform:scale(1.06); }
+        .desk-icon .ic {
+            width:52px; height:52px; margin:0 auto 6px; border-radius:14px;
+            display:flex; align-items:center; justify-content:center; font-size:1.4rem;
+            background:rgba(255,255,255,.2); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.25);
+        }
+        .desk-icon span { font-size:.7rem; text-shadow:0 1px 4px #000; }
+
+        /* Windows */
+        .window {
+            position:absolute; min-width:420px; min-height:280px;
+            background:var(--bg-win); border:1px solid rgba(255,255,255,.18);
+            border-radius:14px; box-shadow:0 30px 80px rgba(0,0,0,.55);
+            display:none; flex-direction:column; overflow:hidden; z-index:50;
+            animation:winIn .28s cubic-bezier(.2,.8,.2,1);
+        }
+        .window.open { display:flex; }
+        .window.maximized { inset:8px 8px 90px 8px !important; width:auto !important; height:auto !important; }
+        @keyframes winIn { from{opacity:0; transform:scale(.92) translateY(16px)} to{opacity:1; transform:none} }
+        .titlebar {
+            height:38px; background:rgba(255,255,255,.06); display:flex; align-items:center;
+            padding:0 12px; gap:8px; cursor:grab; user-select:none; flex-shrink:0;
+        }
+        .titlebar:active { cursor:grabbing; }
+        .dots { display:flex; gap:6px; }
+        .dot { width:12px; height:12px; border-radius:50%; cursor:pointer; }
+        .dot.r { background:#ff5f57; } .dot.y { background:#febc2e; } .dot.g { background:#28c840; }
+        .win-title { font-size:.78rem; opacity:.85; margin-left:8px; flex:1; }
+        .win-body { flex:1; overflow:auto; position:relative; }
+
+        /* Explorer */
+        .explorer { display:flex; height:100%; }
+        .exp-side { width:180px; background:rgba(0,0,0,.35); padding:12px; font-size:.78rem; }
+        .exp-side h4 { opacity:.5; font-size:.65rem; letter-spacing:1px; margin:10px 0 8px; }
+        .exp-item { padding:7px 10px; border-radius:8px; cursor:pointer; display:flex; gap:8px; align-items:center; }
+        .exp-item:hover, .exp-item.active { background:rgba(177,159,251,.25); }
+        .exp-main { flex:1; padding:16px; display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:14px; align-content:start; }
+        .file-card {
+            background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+            border-radius:12px; padding:14px; cursor:pointer; transition:.2s;
+        }
+        .file-card:hover { transform:translateY(-4px); background:rgba(255,255,255,.1); }
+        .file-card i { font-size:1.6rem; color:var(--accent); margin-bottom:8px; }
+        .file-card p { font-size:.75rem; font-weight:600; }
+        .file-card small { opacity:.5; font-size:.65rem; }
+
+        /* VS Code layout */
+        .vscode { display:flex; height:100%; font-family:'JetBrains Mono',monospace; }
+        .vs-side { width:200px; background:#1e1e1e; border-right:1px solid #333; padding:10px 0; font-size:.72rem; }
+        .vs-side .tree { padding:4px 12px; cursor:pointer; }
+        .vs-side .tree:hover { background:#2a2d2e; }
+        .vs-side .tree.active { background:#37373d; }
+        .vs-main { flex:1; display:flex; flex-direction:column; background:#1e1e1e; }
+        .vs-tabs { display:flex; background:#252526; border-bottom:1px solid #333; }
+        .vs-tab { padding:8px 14px; font-size:.72rem; border-right:1px solid #333; display:flex; gap:8px; align-items:center; }
+        .vs-tab.active { background:#1e1e1e; }
+        .vs-code { flex:1; overflow:auto; padding:0; }
+        .vs-code pre { margin:0; min-height:100%; font-size:.78rem; }
+        .vs-code code { display:block; padding:16px 20px; }
+        .vs-status { height:22px; background:#007acc; font-size:.65rem; display:flex; align-items:center; padding:0 10px; gap:16px; }
+
+        /* Browser / about */
+        .about { padding:28px; }
+        .about h2 { margin-bottom:8px; }
+        .about p { opacity:.8; line-height:1.6; max-width:560px; font-size:.9rem; }
+        .pills { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+        .pill { background:rgba(177,159,251,.2); border:1px solid var(--accent); padding:4px 12px; border-radius:20px; font-size:.75rem; }
+
+        /* Music mini in dock area leftover widgets optional overlay */
+        .widgets {
+            position:absolute; right:24px; top:36px; width:240px; z-index:8;
+            display:flex; flex-direction:column; gap:12px;
+        }
+        .glass {
+            background:var(--glass); backdrop-filter:blur(20px) saturate(180%);
+            border:1px solid var(--glass-border); border-radius:22px; padding:14px;
+        }
+        .time { font-family:'Share Tech Mono',monospace; font-size:2.4rem; font-weight:700; }
+        .date { font-size:.8rem; opacity:.85; text-transform:capitalize; }
+        .user-tag { display:flex; align-items:center; justify-content:flex-end; gap:8px; font-size:.8rem; font-weight:600; }
+        .user-avatar { width:22px; height:22px; border-radius:50%; background:#b19ffb; }
+
+        .board-widget { height:210px; display:flex; flex-direction:column; background:rgba(20,22,26,.85); border-radius:18px; padding:10px; border:1px solid rgba(255,255,255,.12); }
+        .messages-container { flex:1; overflow:auto; font-size:.7rem; }
+        .msg-item { background:rgba(255,255,255,.06); padding:6px 8px; border-radius:8px; margin-bottom:6px; }
+        .board-input { width:100%; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.12); color:#fff; border-radius:6px; padding:5px; font-size:.7rem; margin-top:4px; }
+        .board-btn-send { width:100%; margin-top:4px; border:none; border-radius:6px; padding:5px; font-weight:700; cursor:pointer; font-size:.7rem; }
+
+        .music-player { display:flex; gap:10px; align-items:center; background:rgba(20,22,26,.85); border-radius:16px; padding:10px; }
+        .album-art { width:40px; height:40px; border-radius:10px; background-size:cover; }
+        .track-title { font-size:.72rem; font-weight:600; }
+        .player-controls { display:flex; gap:10px; margin-top:4px; font-size:.8rem; }
+        .player-controls i { cursor:pointer; }
+        .player-controls i.active-btn { color:#29b6f6; }
+        .player-controls i.liked { color:#ff3b30; }
+
+        /* Dock */
+        .bottom-dock {
+            position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+            display:flex; gap:14px; padding:10px 22px; border-radius:28px; z-index:80;
+            background:rgba(255,255,255,.22); border:1px solid rgba(255,255,255,.4);
+            backdrop-filter:blur(20px);
+        }
+        .dock-icon {
+            width:48px; height:48px; border-radius:13px; display:flex; align-items:center; justify-content:center;
+            color:#fff; font-size:1.4rem; cursor:pointer; transition: transform .25s cubic-bezier(.4,0,.2,1);
+            position:relative;
+        }
+        .dock-icon:hover { transform:translateY(-12px) scale(1.14); }
+        .dock-icon .dot-on { position:absolute; bottom:-6px; width:4px; height:4px; background:#fff; border-radius:50%; }
+        .icon-finder { background:linear-gradient(#5ac8fa,#007aff); }
+        .icon-code { background:linear-gradient(#0078d4,#1e1e1e); }
+        .icon-safari { background:linear-gradient(135deg,#00c6ff,#0072ff); }
+        .icon-spotify { background:#1DB954; }
+        .icon-photos { background:#fff; color:#ffb142; }
+        .icon-discord { background:#5865F2; }
+        .icon-term { background:#111; }
+
+        .char {
+            position:absolute; left:50%; top:52%; transform:translate(-50%,-50%);
+            height:72vh; z-index:3; pointer-events:none;
+            filter:drop-shadow(0 12px 28px rgba(0,0,0,.5)); opacity:.95;
+        }
+    </style>
+</head>
+<body>
+    <div class="lockscreen" id="lockscreen" onclick="unlockTablet()">
+        <div class="lock-clock" id="lock-clock">00:00</div>
+        <div class="lock-date" id="lock-date">Date</div>
+        <div class="lock-hint">HAZ CLIC PARA DESBLOQUEAR</div>
+    </div>
+
+    <div class="desktop">
+        <div class="sidebar">
+            <div class="sidebar-btn search" onclick="openWin('finder')"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <a href="https://tiktok.com" target="_blank" class="sidebar-btn"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://youtube.com" target="_blank" class="sidebar-btn"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" class="sidebar-btn"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="sidebar-btn"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+
+        <div class="desk-icons">
+            <div class="desk-icon" onclick="openWin('finder')">
+                <div class="ic"><i class="fa-solid fa-folder"></i></div>
+                <span>Projects</span>
+            </div>
+            <div class="desk-icon" onclick="openProject('portfolio')">
+                <div class="ic"><i class="fa-solid fa-code"></i></div>
+                <span>portfolio.html</span>
+            </div>
+            <div class="desk-icon" onclick="openWin('about')">
+                <div class="ic"><i class="fa-solid fa-user"></i></div>
+                <span>About Me</span>
+            </div>
+            <div class="desk-icon" onclick="openWin('term')">
+                <div class="ic"><i class="fa-solid fa-terminal"></i></div>
+                <span>Terminal</span>
+            </div>
+        </div>
+
+        <img class="char" src="https://u.cubeupload.com/zmonochrome/devilmandxddemonsand.png" alt="">
+
+        <div class="widgets">
+            <div class="glass">
+                <div class="user-tag">Yuffie <div class="user-avatar"></div></div>
+                <div class="time" id="live-clock">00:00</div>
+                <div class="date" id="live-date"></div>
+                <div id="dynamic-greeting" style="margin-top:6px;font-weight:700;">Hi Yuffie!!</div>
+            </div>
+            <div class="music-player">
+                <audio id="main-audio"></audio>
+                <div class="album-art" id="player-art"></div>
+                <div>
+                    <div class="track-title" id="track-title">…</div>
+                    <div class="player-controls">
+                        <i class="fa-solid fa-repeat" id="btn-repeat"></i>
+                        <i class="fa-solid fa-backward-step" id="btn-prev"></i>
+                        <i class="fa-solid fa-play" id="play-btn"></i>
+                        <i class="fa-solid fa-forward-step" id="btn-next"></i>
+                        <i class="fa-solid fa-heart" id="btn-heart"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="board-widget">
+                <div style="font-size:.75rem;font-weight:700;opacity:.8;margin-bottom:4px;"><i class="fa-solid fa-comments"></i> Muro Público</div>
+                <div class="messages-container" id="messages-container"></div>
+                <input id="input-name" class="board-input" placeholder="Nick…" maxlength="12">
+                <input id="input-msg" class="board-input" placeholder="Mensaje…" maxlength="50">
+                <button class="board-btn-send" onclick="sendMessage()">Firmar</button>
+            </div>
+        </div>
+
+        <!-- FINDER -->
+        <div class="window" id="win-finder" style="left:180px;top:80px;width:720px;height:460px;">
+            <div class="titlebar" data-win="win-finder">
+                <div class="dots">
+                    <div class="dot r" onclick="closeWin('finder')"></div>
+                    <div class="dot y" onclick="minWin('finder')"></div>
+                    <div class="dot g" onclick="maxWin('finder')"></div>
+                </div>
+                <span class="win-title">Finder — Projects</span>
+            </div>
+            <div class="win-body">
+                <div class="explorer">
+                    <div class="exp-side">
+                        <h4>FAVORITES</h4>
+                        <div class="exp-item active"><i class="fa-solid fa-folder"></i> Projects</div>
+                        <div class="exp-item" onclick="openWin('about')"><i class="fa-solid fa-user"></i> About</div>
+                        <div class="exp-item" onclick="openWin('photos')"><i class="fa-solid fa-image"></i> Gallery</div>
+                    </div>
+                    <div class="exp-main" id="file-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VS CODE -->
+        <div class="window" id="win-code" style="left:200px;top:70px;width:860px;height:520px;">
+            <div class="titlebar" data-win="win-code">
+                <div class="dots">
+                    <div class="dot r" onclick="closeWin('code')"></div>
+                    <div class="dot y" onclick="minWin('code')"></div>
+                    <div class="dot g" onclick="maxWin('code')"></div>
+                </div>
+                <span class="win-title" id="code-win-title">Visual Studio Code</span>
+            </div>
+            <div class="win-body">
+                <div class="vscode">
+                    <div class="vs-side" id="vs-tree"></div>
+                    <div class="vs-main">
+                        <div class="vs-tabs"><div class="vs-tab active" id="vs-tab-name">welcome.md</div></div>
+                        <div class="vs-code"><pre><code class="language-markdown" id="vs-code">// open a project</code></pre></div>
+                        <div class="vs-status"><span>UTF-8</span><span id="vs-lang">markdown</span><span>Ln 1, Col 1</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT -->
+        <div class="window" id="win-about" style="left:260px;top:100px;width:560px;height:380px;">
+            <div class="titlebar" data-win="win-about">
+                <div class="dots">
+                    <div class="dot r" onclick="closeWin('about')"></div>
+                    <div class="dot y" onclick="minWin('about')"></div>
+                    <div class="dot g" onclick="maxWin('about')"></div>
+                </div>
+                <span class="win-title">Safari — About Yuffie</span>
+            </div>
+            <div class="win-body about">
+                <h2>Yuffie</h2>
+                <p>Frontend / creative coder. This desktop is a living portfolio: open <b>Projects</b> and read real source like in VS Code.</p>
+                <div class="pills">
+                    <span class="pill">HTML/CSS</span><span class="pill">JavaScript</span>
+                    <span class="pill">UI / Glassmorphism</span><span class="pill">Firebase</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TERMINAL -->
+        <div class="window" id="win-term" style="left:240px;top:160px;width:620px;height:340px;">
+            <div class="titlebar" data-win="win-term">
+                <div class="dots">
+                    <div class="dot r" onclick="closeWin('term')"></div>
+                    <div class="dot y" onclick="minWin('term')"></div>
+                    <div class="dot g" onclick="maxWin('term')"></div>
+                </div>
+                <span class="win-title">zsh — yuffie@os</span>
+            </div>
+            <div class="win-body" style="background:#0d1117;font-family:'JetBrains Mono',monospace;font-size:.8rem;padding:12px;" id="term-out">
+                <div>Last login: now on ttys000</div>
+                <div>yuffie@os ~ % <span style="opacity:.6">type <b>help</b>, <b>ls</b>, <b>open projects</b></span></div>
+            </div>
+        </div>
+
+        <!-- PHOTOS -->
+        <div class="window" id="win-photos" style="left:300px;top:90px;width:640px;height:420px;">
+            <div class="titlebar" data-win="win-photos">
+                <div class="dots">
+                    <div class="dot r" onclick="closeWin('photos')"></div>
+                    <div class="dot y" onclick="minWin('photos')"></div>
+                    <div class="dot g" onclick="maxWin('photos')"></div>
+                </div>
+                <span class="win-title">Photos</span>
+            </div>
+            <div class="win-body" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;">
+                <div style="background:url('https://u.cubeupload.com/zmonochrome/miyus.jpg') center/cover;border-radius:12px;"></div>
+                <div style="background:url('https://u.cubeupload.com/zmonochrome/miyus2.jpg') center/cover;border-radius:12px;"></div>
+                <div style="background:url('https://u.cubeupload.com/zmonochrome/miyus1.jpg') center/cover;border-radius:12px;grid-column:span 2;min-height:140px;"></div>
+            </div>
+        </div>
+
+        <div class="bottom-dock">
+            <div class="dock-icon icon-finder" onclick="openWin('finder')" title="Finder"><i class="fa-solid fa-compass"></i><span class="dot-on" id="dot-finder" style="display:none"></span></div>
+            <div class="dock-icon icon-code" onclick="openWin('code')" title="VS Code"><i class="fa-solid fa-code"></i><span class="dot-on" id="dot-code" style="display:none"></span></div>
+            <div class="dock-icon icon-safari" onclick="openWin('about')"><i class="fa-brands fa-safari"></i><span class="dot-on" id="dot-about" style="display:none"></span></div>
+            <div class="dock-icon icon-spotify" onclick="togglePlay()"><i class="fa-brands fa-spotify"></i></div>
+            <div class="dock-icon icon-photos" onclick="openWin('photos')"><i class="fa-solid fa-images"></i><span class="dot-on" id="dot-photos" style="display:none"></span></div>
+            <div class="dock-icon icon-term" onclick="openWin('term')"><i class="fa-solid fa-terminal"></i><span class="dot-on" id="dot-term" style="display:none"></span></div>
+            <div class="dock-icon icon-discord"><i class="fa-brands fa-discord"></i></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        const app = initializeApp({ databaseURL: "https://xatspaces-notes-default-rtdb.firebaseio.com/" });
+        const db = getDatabase(app);
+        const messagesRef = ref(db, 'messages');
+        onValue(query(messagesRef, limitToLast(15)), (snapshot) => {
+            const container = document.getElementById('messages-container');
+            container.innerHTML = "";
+            const data = snapshot.val();
+            if (!data) { container.innerHTML = `<div style="opacity:.5;text-align:center;">Muro libre</div>`; return; }
+            Object.values(data).forEach(msg => {
+                const item = document.createElement('div');
+                item.className = 'msg-item';
+                item.innerHTML = `<div style="color:#b19ffb;font-weight:700;">${escapeHTML(msg.name)} <span style="opacity:.5;font-weight:400">${msg.time||''}</span></div><div>${escapeHTML(msg.text)}</div>`;
+                container.appendChild(item);
+            });
+            container.scrollTop = container.scrollHeight;
+        });
+        window.sendMessage = function() {
+            const name = document.getElementById('input-name').value.trim() || "Anónimo";
+            const text = document.getElementById('input-msg').value.trim();
+            if (!text) return;
+            const now = new Date();
+            push(messagesRef, { name, text, time: `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}` });
+            document.getElementById('input-msg').value = "";
+        };
+        function escapeHTML(str) {
+            return String(str).replace(/[&<>'"]/g, t => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[t]));
+        }
+    </script>
+    <script>
+        /* —— PROJECTS: add your repos here —— */
+        const PROJECTS = [
+            {
+                id: 'portfolio',
+                name: 'Liquid OS Portfolio',
+                lang: 'html',
+                icon: 'fa-brands fa-html5',
+                files: {
+                    'index.html': `<!DOCTYPE html>
+<html>
+  <head><title>Yuffie OS</title></head>
+  <body>
+    <h1>Personal OS Portfolio</h1>
+    <p>Window manager + VS Code viewer</p>
+  </body>
+</html>`,
+                    'app.js': `function openWin(id) {
+  document.getElementById('win-' + id).classList.add('open');
+  focusWin(id);
+}
+
+function closeWin(id) {
+  document.getElementById('win-' + id).classList.remove('open');
+}`
+                }
+            },
+            {
+                id: 'api',
+                name: 'REST Notes API',
+                lang: 'javascript',
+                icon: 'fa-brands fa-js',
+                files: {
+                    'server.js': `import express from 'express';
+const app = express();
+app.use(express.json());
+
+app.get('/notes', (req, res) => {
+  res.json([{ id: 1, text: 'ship portfolio' }]);
+});
+
+app.listen(3000, () => console.log('API on :3000'));`
+                }
+            },
+            {
+                id: 'ui',
+                name: 'Glass Kit',
+                lang: 'css',
+                icon: 'fa-brands fa-css3-alt',
+                files: {
+                    'glass.css': `.glass {
+  background: rgba(255,255,255,.16);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 24px;
+}`
+                }
+            }
+        ];
+
+        let zTop = 60;
+        function elWin(id) { return document.getElementById('win-' + id); }
+        function openWin(id) {
+            const w = elWin(id);
+            if (!w) return;
+            w.classList.add('open');
+            w.style.display = 'flex';
+            focusWin(id);
+            const d = document.getElementById('dot-' + id);
+            if (d) d.style.display = 'block';
+        }
+        function closeWin(id) {
+            const w = elWin(id);
+            w.classList.remove('open','maximized');
+            w.style.display = 'none';
+            const d = document.getElementById('dot-' + id);
+            if (d) d.style.display = 'none';
+        }
+        function minWin(id) { closeWin(id); openWin(id); elWin(id).style.display='none'; }
+        function maxWin(id) { elWin(id).classList.toggle('maximized'); }
+        function focusWin(id) {
+            elWin(id).style.zIndex = ++zTop;
+        }
+
+        function renderFinder() {
+            const grid = document.getElementById('file-grid');
+            grid.innerHTML = PROJECTS.map(p => `
+                <div class="file-card" onclick="openProject('${p.id}')">
+                    <i class="${p.icon}"></i>
+                    <p>${p.name}</p>
+                    <small>${Object.keys(p.files).length} files · ${p.lang}</small>
+                </div>`).join('');
+        }
+
+        function openProject(pid) {
+            const p = PROJECTS.find(x => x.id === pid);
+            if (!p) return;
+            openWin('code');
+            const first = Object.keys(p.files)[0];
+            const tree = document.getElementById('vs-tree');
+            tree.innerHTML = `<div style="padding:8px 12px;opacity:.5;font-size:.65rem;">${p.name.toUpperCase()}</div>` +
+                Object.keys(p.files).map(f => `<div class="tree" data-f="${f}" onclick="showFile('${pid}','${f}')"><i class="fa-regular fa-file-code"></i> ${f}</div>`).join('');
+            showFile(pid, first);
+        }
+
+        function showFile(pid, fname) {
+            const p = PROJECTS.find(x => x.id === pid);
+            const code = p.files[fname];
+            const ext = fname.split('.').pop();
+            const lang = { js:'javascript', html:'xml', css:'css', md:'markdown' }[ext] || ext;
+            document.getElementById('vs-tab-name').textContent = fname;
+            document.getElementById('code-win-title').textContent = `VS Code — ${p.name}/${fname}`;
+            document.getElementById('vs-lang').textContent = lang;
+            const block = document.getElementById('vs-code');
+            block.className = 'language-' + lang;
+            block.textContent = code;
+            hljs.highlightElement(block);
+            document.querySelectorAll('.tree').forEach(t => t.classList.toggle('active', t.dataset.f === fname));
+        }
+
+        /* drag windows */
+        document.querySelectorAll('.titlebar').forEach(bar => {
+            bar.addEventListener('mousedown', e => {
+                if (e.target.classList.contains('dot')) return;
+                const win = document.getElementById(bar.dataset.win);
+                focusWin(bar.dataset.win.replace('win-',''));
+                const r = win.getBoundingClientRect();
+                const ox = e.clientX - r.left, oy = e.clientY - r.top;
+                function move(ev) {
+                    win.style.left = (ev.clientX - ox) + 'px';
+                    win.style.top = (ev.clientY - oy) + 'px';
+                    win.classList.remove('maximized');
+                }
+                function up() { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up); }
+                window.addEventListener('mousemove', move);
+                window.addEventListener('mouseup', up);
+            });
+        });
+
+        /* music */
+        const playlist = [
+            { title: "Lo-Fi Beats & Chill", art: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=150", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+            { title: "Synthwave Dreams", art: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=150", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+            { title: "Cyberpunk Vibe", art: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=150", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+        ];
+        let currentTrackIndex = 0, isLooping = false;
+        const audio = document.getElementById('main-audio');
+        const playBtn = document.getElementById('play-btn');
+        function loadTrack(i) {
+            const t = playlist[i];
+            audio.src = t.url;
+            document.getElementById('track-title').textContent = t.title;
+            document.getElementById('player-art').style.backgroundImage = `url('${t.art}')`;
+        }
+        function togglePlay() {
+            if (audio.paused) audio.play().then(() => playBtn.classList.replace('fa-play','fa-pause'));
+            else { audio.pause(); playBtn.classList.replace('fa-pause','fa-play'); }
+        }
+        playBtn.onclick = e => { e.stopPropagation(); togglePlay(); };
+        document.getElementById('btn-next').onclick = e => { e.stopPropagation(); currentTrackIndex = (currentTrackIndex+1)%playlist.length; loadTrack(currentTrackIndex); togglePlay(); };
+        document.getElementById('btn-prev').onclick = e => { e.stopPropagation(); currentTrackIndex = (currentTrackIndex-1+playlist.length)%playlist.length; loadTrack(currentTrackIndex); togglePlay(); };
+        document.getElementById('btn-repeat').onclick = e => { e.stopPropagation(); isLooping=!isLooping; audio.loop=isLooping; e.currentTarget.classList.toggle('active-btn', isLooping); };
+        document.getElementById('btn-heart').onclick = e => { e.stopPropagation(); e.currentTarget.classList.toggle('liked'); };
+        audio.addEventListener('ended', () => { if (!isLooping) document.getElementById('btn-next').click(); });
+
+        function unlockTablet() { document.getElementById('lockscreen').classList.add('unlocked'); }
+        function updateClockAndCalendar() {
+            const now = new Date();
+            const hm = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+            document.getElementById('live-clock').textContent = hm;
+            document.getElementById('lock-clock').textContent = hm;
+            document.getElementById('live-date').textContent = now.toLocaleDateString('es-ES',{weekday:'long',month:'2-digit',day:'2-digit'});
+            document.getElementById('lock-date').textContent = now.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+            const h = now.getHours(), g = document.getElementById('dynamic-greeting');
+            if (h>=6 && h<12) g.textContent = "Good morning, Yuffie! ☕";
+            else if (h<18) g.textContent = "Hi Yuffie!! ✨";
+            else if (h<23) g.textContent = "Time for a break, Yuffie? 🎬";
+            else g.textContent = "Up late, Yuffie? 🌙";
+        }
+
+        setInterval(updateClockAndCalendar, 1000);
+        updateClockAndCalendar();
+        loadTrack(0);
+        renderFinder();
+        window.openWin = openWin; window.closeWin = closeWin; window.minWin = minWin;
+        window.maxWin = maxWin; window.openProject = openProject; window.showFile = showFile; window.togglePlay = togglePlay;
+    </script>
+</body>
+</html>
