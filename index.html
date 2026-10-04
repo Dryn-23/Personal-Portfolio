@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Garin, Edrian T. — Student Developer & Aspiring Software Engineer. Building simple solutions to real-world problems.">
+  <meta name="keywords" content="Garin, Edrian T., portfolio, student developer, software engineer, web development">
+  <meta name="author" content="Garin, Edrian T.">
+  <title>Garin, Edrian T. — Student Developer & Aspiring Software Engineer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#hero" class="nav-logo">GE.</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <p class="hero-greeting reveal">Hi, I'm</p>
+        <h1 class="hero-name reveal">Garin, Edrian T.</h1>
+        <h2 class="hero-title reveal">Student Developer &amp; Aspiring Software Engineer</h2>
+        <p class="hero-description reveal">I'm passionate about building clean, functional, and user-focused digital experiences.</p>
+        <div class="hero-buttons reveal">
+          <a href="#projects" class="btn btn-primary">View My Work</a>
+          <a href="#contact" class="btn btn-outline">Contact Me</a>
+        </div>
+        <p class="hero-location reveal">Based in Marilao, Bulacan</p>
+      </div>
+      <div class="hero-image reveal-scale">
+        <div class="hero-image-wrap">
+          <img src="images/profile.jpg" alt="Garin, Edrian T. — Profile Photo" loading="eager"
+               onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-active');">
+          <div class="hero-image-placeholder">GE</div>
+        </div>
+      </div>
+    </div>
+    <a href="#about" class="scroll-down-indicator" id="scrollDownIndicator" aria-label="Scroll down to About section">
+      <span class="mouse-icon">
+        <span class="wheel"></span>
+      </span>
+      <span class="scroll-text">Scroll Down</span>
+    </a>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-heading reveal">About Me</h2>
+      <div class="about-grid">
+        <div class="about-text reveal-left">
+          <p>I'm Garin, Edrian T., a third-year Information Technology student at Pambayang Dalubhasaan ng Marilao. I enjoy building software that solves practical problems and improves everyday experiences.</p>
+          <p>My interests include web development, software engineering, database systems, and UI/UX design. Through academic and personal projects, I've gained experience developing responsive websites, desktop applications, and database-driven systems.</p>
+          <p>I'm currently focused on improving my development skills, learning modern technologies, and building projects that demonstrate both my technical and creative abilities.</p>
+        </div>
+        <div class="about-info reveal-right">
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Name</span>
+              <span class="info-value">Garin, Edrian T.</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Education</span>
+              <span class="info-value">BS Information Technology</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Year</span>
+              <span class="info-value">3rd Year</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">School</span>
+              <span class="info-value">Pambayang Dalubhasaan ng Marilao</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Location</span>
+              <span class="info-value">Marilao, Bulacan</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Focus</span>
+              <span class="info-value">Software &amp; Web Development</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="section stats-section section-alt" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card reveal-scale">
+          <div class="stat-number" data-target="4">0</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat-card reveal-scale">
+          <div class="stat-number" data-target="3">0</div>
+          <div class="stat-label">Years Learning</div>
+        </div>
+        <div class="stat-card reveal-scale">
+          <div class="stat-number" data-target="15">0</div>
+          <div class="stat-label">Technologies Used</div>
+        </div>
+        <div class="stat-card reveal-scale">
+          <div class="stat-number" data-target="100">0</div>
+          <div class="stat-label">Commits This Year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What I Do -->
+  <section class="section section-alt" id="services">
+    <div class="container">
+      <h2 class="section-heading reveal">What I Do</h2>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <h3 class="service-title">Web Development</h3>
+          <p class="service-desc">Building responsive and user-friendly websites.</p>
+        </div>
+        <div class="service-card reveal">
+          <h3 class="service-title">Software Development</h3>
+          <p class="service-desc">Creating practical applications designed around real-world problems.</p>
+        </div>
+        <div class="service-card reveal">
+          <h3 class="service-title">Database Development</h3>
+          <p class="service-desc">Designing structured databases and data-driven applications.</p>
+        </div>
+        <div class="service-card reveal">
+          <h3 class="service-title">UI/UX</h3>
+          <p class="service-desc">Creating simple and intuitive interfaces focused on usability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section" id="skills">
+    <div class="container">
+      <h2 class="section-heading reveal">Skills &amp; Technologies</h2>
+      <div class="skills-grid">
+        <div class="skill-group reveal">
+          <h3 class="skill-group-title">Programming</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">C#</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">JavaScript</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h3 class="skill-group-title">Web Development</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML</span>
+            <span class="skill-tag">CSS</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">React</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h3 class="skill-group-title">Database</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">SQL Server</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h3 class="skill-group-title">Tools</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Visual Studio</span>
+            <span class="skill-tag">VS Code</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h3 class="skill-group-title">Other</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">REST APIs</span>
+            <span class="skill-tag">UI/UX Design</span>
+            <span class="skill-tag">Responsive Design</span>
+            <span class="skill-tag">Database Design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section section-alt" id="projects">
+    <div class="container">
+      <h2 class="section-heading reveal">Selected Projects</h2>
+      <p class="section-subtitle reveal">A selection of academic and personal projects I've worked on.</p>
+      <div class="projects-list" id="projectsList">
+        <!-- Project cards rendered by JS for easy data-driven updates -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="section" id="philosophy">
+    <div class="container">
+      <h2 class="section-heading reveal">How I Build</h2>
+      <div class="philosophy-grid">
+        <div class="philosophy-card reveal">
+          <span class="philosophy-num">01</span>
+          <h3 class="philosophy-title">Keep It Simple</h3>
+          <p class="philosophy-desc">I believe good software should be easy to understand and use.</p>
+        </div>
+        <div class="philosophy-card reveal">
+          <span class="philosophy-num">02</span>
+          <h3 class="philosophy-title">Solve Real Problems</h3>
+          <p class="philosophy-desc">I focus on building technology that has a practical purpose.</p>
+        </div>
+        <div class="philosophy-card reveal">
+          <span class="philosophy-num">03</span>
+          <h3 class="philosophy-title">Keep Learning</h3>
+          <p class="philosophy-desc">Technology constantly evolves, so I continuously improve my skills and explore new tools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience & Education -->
+  <section class="section section-alt" id="experience">
+    <div class="container">
+      <h2 class="section-heading reveal">Experience &amp; Education</h2>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <span class="timeline-year">2027</span>
+            <h3 class="timeline-title">Expected Graduation</h3>
+            <p class="timeline-org">Bachelor of Science in Information Technology — North Valley State University</p>
+            <p class="timeline-desc">Currently completing my undergraduate studies with a focus on software development, databases, and web technologies.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <span class="timeline-year">2026</span>
+            <h3 class="timeline-title">Academic Projects</h3>
+            <p class="timeline-org">Student Developer</p>
+            <p class="timeline-desc">Developed multiple academic applications including management systems, database-driven applications, and responsive websites.</p>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <span class="timeline-year">2025</span>
+            <h3 class="timeline-title">Programming Development</h3>
+            <p class="timeline-org">Independent Learning</p>
+            <p class="timeline-desc">Expanded my programming knowledge through personal projects, online learning, experimentation, and practical software development.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Achievements -->
+  <section class="section" id="achievements">
+    <div class="container">
+      <h2 class="section-heading reveal">Achievements</h2>
+      <ul class="achievements-list">
+        <li class="achievement-item reveal">Completed multiple academic software development projects</li>
+        <li class="achievement-item reveal">Developed database-driven applications</li>
+        <li class="achievement-item reveal">Built responsive web applications</li>
+        <li class="achievement-item reveal">Participated in collaborative software projects</li>
+        <li class="achievement-item reveal">Continuously learning modern development technologies</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section section-alt" id="contact">
+    <div class="container">
+      <h2 class="section-heading reveal">Let's Work Together</h2>
+      <p class="section-subtitle reveal">Have an idea, project, or opportunity? I'd love to hear from you.</p>
+      <div class="contact-grid">
+        <div class="contact-info reveal-left">
+          <div class="contact-item">
+            <span class="contact-label">Email</span>
+            <a href="mailto:garin.edrian.dev@example.com" class="contact-value">garin.edrian.dev@example.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Location</span>
+            <span class="contact-value">Marilao, Bulacan</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">GitHub</span>
+            <a href="https://github.com/garinedrian" target="_blank" rel="noopener noreferrer" class="contact-value">github.com/garinedrian</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">LinkedIn</span>
+            <a href="https://linkedin.com/in/garinedrian" target="_blank" rel="noopener noreferrer" class="contact-value">linkedin.com/in/garinedrian</a>
+          </div>
+        </div>
+        <form class="contact-form reveal-right" id="contactForm" novalidate>
+          <div class="form-group">
+            <label for="contactName" class="form-label">Name</label>
+            <input type="text" id="contactName" class="form-input" required autocomplete="name">
+            <span class="form-error" id="nameError"></span>
+          </div>
+          <div class="form-group">
+            <label for="contactEmail" class="form-label">Email</label>
+            <input type="email" id="contactEmail" class="form-input" required autocomplete="email">
+            <span class="form-error" id="emailError"></span>
+          </div>
+          <div class="form-group">
+            <label for="contactMessage" class="form-label">Message</label>
+            <textarea id="contactMessage" class="form-textarea" rows="5" required></textarea>
+            <span class="form-error" id="messageError"></span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          <p class="form-success hidden" id="formSuccess">Thank you! Your message has been sent.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <p class="footer-name">Garin, Edrian T.</p>
+        <p class="footer-title">Student Developer &amp; Aspiring Software Engineer</p>
+        <p class="footer-tagline">Building simple solutions to real-world problems.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/garinedrian" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+        <a href="https://linkedin.com/in/garinedrian" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
+        <a href="mailto:garin.edrian.dev@example.com" aria-label="Email">Email</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Garin, Edrian T. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script src="app.js"></script>
+</body>
+</html>
