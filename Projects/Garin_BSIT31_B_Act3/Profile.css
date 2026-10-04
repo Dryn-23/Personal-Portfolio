@@ -1,0 +1,63 @@
+/*body*/
+* {
+    margin:0px;
+}
+
+/*Header*/
+header{
+    background-color: yellow;
+    text-align: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+/*Navigation*/
+nav{
+    background-color: aquamarine;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+a{
+    text-decoration: none;
+}
+
+/*Main Content*/
+
+.maincontent{
+    display: flex;
+    height: 450px;
+}
+
+/*Section*/
+section{
+ background-color: rgb(252, 252, 252);
+    margin: 0%;
+    padding: 20px;
+    /*width: 70%;*/
+    flex: 2;
+}
+
+img{
+    height: 40%;
+    width: 30%;
+}
+
+/*Aside*/
+aside{
+    background-color: beige;
+    margin: 0%;
+    padding: 20px;
+    /*width: 30%;*/
+    flex: 1;
+}
+
+/*Footer*/
+footer{
+    background-color: rgb(24, 150, 62);
+    margin: 0%;
+    padding: 20px;
+    text-align: center;
+}

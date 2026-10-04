@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Registration.css">
+    <title>Document</title>
+</head>
+<body>
+    <!--Header-->
+    <Header>
+        <h1>Registration</h1>
+        <p>Welcome to my website</p>
+    </Header>
+    <!--Navigation-->
+    <nav>
+        <a href="Home.html">Home</a>
+        <a href="Registration.html">Registration Form</a>
+        <a href="Grade.html">Grade Table</a>
+        <a href="Profile.html">My Profile</a>
+    </nav>
+    <!--Main Content Section and Aside-->
+    <div class="maincontent">
+        <!--Section-->
+        <section>
+
+            <h1>MLBB REGISTRATION FORM</h1>
+
+            <form >
+
+                <!--Text Input Controls-->
+                First Name
+                <input type="text" name="first_name" />
+                <br>
+                Last Name:  
+                <input type="text" name="last_name" />
+                <br>
+
+                <!--Password input controls-->
+                User ID :  
+                <input type="text" name="user_id" />
+                <br>
+                Password:  
+                <input type="password" name="password" />
+                <br>
+
+                <!--Multiple-Line Text Input Controls-->
+                Description : <br />
+                <textarea rows="5" cols="50" name="description" placeholder=” Enter description here...”></textarea>
+                <br>
+
+                <!--Checkbox Control-->
+                <input type="checkbox" name="maths" value="on"> Maths
+                <input type="checkbox" name="physics" value="on"> Physics
+                <br>
+
+                <!--Radio Button Control-->
+                <input type="radio" name="subject" value="maths"> Maths
+                <input type="radio" name="subject" value="physics"> Physics
+                <br>
+
+                <!--Select Box Contro-->
+                <select name="dropdown">
+                    <option value="Maths" selected>Maths</option>
+                    <option value="Physics">Physics</option>
+                </select>
+                <br>
+
+                <!--File Upload Box-->
+                <input type="file" name="fileupload" accept="image/*" />
+                <br>
+
+                <!--Button Controls-->
+                <input type="submit" name="submit" value="Submit" />
+                <input type="reset" name="reset"  value="Reset" />
+                <input type="button" name="ok" value="OK"  />
+                <input type="image" name="imagebutton" src="/html/images/logo.png" />
+                <br>
+                
+                <!--Hidden Form Controls-->
+                <p>This is page 10</p>
+                <input type="hidden" name="pagename" value="10" />
+                <input type="submit" name="submit" value="Submit" /> 
+                <input type="reset" name="reset"  value="Reset" />
+
+            </form>
+          
+        </section>
+        <!--Aside-->
+        <Aside>
+            <h3>Announcement</h3><br>
+
+            <ul>
+                <li>Laboratory 1 | Quiz 1</li>
+                <li>Laboratory 1 | Quiz 1</li>
+                <li>Laboratory 1 | Quiz 1</li>
+                <li>Laboratory 1 | Quiz 1</li>
+            </ul>
+        </Aside>
+
+    </div>
+    <!--Footer-->
+    <footer>
+        <p>@garin2026</p>
+    </footer>
+
+</body>
+</html>

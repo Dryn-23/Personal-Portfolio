@@ -32,7 +32,7 @@ const PROFILE = {
       tech:   ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'],
       status: 'Completed',
       image:  'images/projects/amfaye-bites.jpg',
-      viewUrl:   '#',
+      viewUrl:   'Projects\\Garin_BSIT31_B_Act3\\Home.html',
       sourceUrl: '#',
     },
     {
