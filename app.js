@@ -31,7 +31,7 @@ const PROFILE = {
       desc:   'A web-based pastry and fruit shake ordering and point-of-sale system designed to simplify order management, product management, and sales tracking.',
       tech:   ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'],
       status: 'Completed',
-      image:  'images/projects/amfaye-bites.jpg',
+      image:  'C:\\Code\\Web-Base\\Personal-portfolio-2\\images\\image.png',
       viewUrl:   'Projects\\Garin_BSIT31_B_Act3\\Home.html',
       sourceUrl: '#',
     },
