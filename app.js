@@ -47,12 +47,12 @@ const PROFILE = {
     },
     {
       number: '03',
-      title:  'School Lost & Found System',
-      desc:   'A school-based digital lost-and-found system that helps students and administrators record, search, and manage lost and found items.',
-      tech:   ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'],
+      title:  'ACTIVITY 3',
+      desc:   'A web-based pastry and fruit shake ordering and point-of-sale system designed to simplify order management, product management, and sales tracking.',
+      tech:   ['HTML', 'CSS'],
       status: 'Completed',
-      image:  'images/projects/lost-found.jpg',
-      viewUrl:   '#',
+      image:  'images\\image.png',
+      viewUrl:   'Projects\\Garin_BSIT31_B_Act3\\Home.html',
       sourceUrl: '#',
     },
     {
