@@ -25,7 +25,7 @@ const PROFILE = {
       tech:   ['HTML', 'CSS'],
       status: 'Completed',
       image:  'images\\Act1.png',
-      viewUrl:   'Projects\\Garin_BSIT31_B_Act3\\Home.html',
+      viewUrl:   '404.html',
       sourceUrl: '#',
     },
     {
@@ -35,7 +35,7 @@ const PROFILE = {
       tech:   ['HTML', 'CSS'],
       status: 'Completed',
       image:  'images\\Act2.png',
-      viewUrl:   'Projects\\Garin_Act2\\Home.html',
+      viewUrl:   '404.html',
       sourceUrl: '#',
     },
     {
@@ -55,7 +55,7 @@ const PROFILE = {
       tech:   ['HTML', 'CSS'],
       status: 'Ongoing',
       image:  'images\\Act4.png',
-      viewUrl:   '#',
+      viewUrl:   '404.html',
       sourceUrl: '#',
     },
         {
@@ -65,7 +65,7 @@ const PROFILE = {
       tech:   ['HTML', 'CSS'],
       status: 'Ongoing',
       image:  'images\\Act5.png',
-      viewUrl:   '#',
+      viewUrl:   '404.html',
       sourceUrl: '#',
     },
         {
