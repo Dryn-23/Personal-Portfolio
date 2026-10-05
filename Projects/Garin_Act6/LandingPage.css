@@ -1,0 +1,228 @@
+*{
+    margin: 0px;
+
+}
+
+@font-face {
+   font-family: 'Netflix Sans';
+   font-weight: 400;
+   font-display: swap;
+   src: url('https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Rg.woff2') format('woff2'),
+        url('https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Rg.woff') format('woff');
+}
+body {
+   font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+   background-color: black;
+   color: white;
+   margin: 0;
+   padding: 0;
+}
+
+header {
+    background-color: rgba(82, 7, 11, 0.5);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px 20px 30px;
+    color: aliceblue;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header img{
+    height: 50px;
+}
+
+nav ul{
+    a{
+        color: aliceblue;
+        text-decoration: none;
+        padding: 10px;
+    }
+    margin-top: 10px;
+    padding-top:5px ;
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    list-style: none;
+}
+
+ul a:hover{
+    background-color: #9b0910 ;
+}
+
+.maincontainer{
+    background-color: #80a0c0;
+    /* display: flex; */
+}
+
+.home {
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgb(0, 0, 0)), 
+        url('images/bg.png');
+
+    background-size: cover;      
+    background-position: center;  
+    background-repeat: no-repeat;
+    height: 960px;
+
+}
+
+
+.home-text{
+    font-size: 60px;
+    display: flex;
+    justify-content: center;
+    padding-top: 350px;
+    color: white;
+}
+
+.buttons{
+
+    display: flex;
+    justify-content: center;
+}
+
+.button1{
+    margin:50px 750px;
+    padding: 20px 120px 20px 120px;
+    background-color:#9b0910 ;
+    color: white;
+    border-radius: 10px;
+
+}
+
+.button1:hover {
+    background-color: #b0070f;
+}
+
+.trending{
+    /* flex:2; */
+    background-color: #000000;
+    height: 1000px;
+}
+
+.trending-text{
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    padding-top: 150px;
+    color: white;
+}
+
+    .cards {
+        
+        padding: 100px 50px 0px 50px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+
+    .cards div {
+
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin: 10px;
+        width: 350px;
+        text-align: center;
+        height: 400px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cards div:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+
+    .card1 {
+         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.692)), 
+                         url('images/1.webp');
+         background-size: cover;      
+         background-position: center;  
+         background-repeat: no-repeat;
+        }
+    .card2 {
+         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.692)), 
+                         url('images/1.webp');
+         background-size: cover;      
+         background-position: center;  
+         background-repeat: no-repeat;
+        }
+    .card3 {
+         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.692)), 
+                          url('images/1.webp');
+         background-size: cover;      
+         background-position: center;  
+         background-repeat: no-repeat;
+        }
+    .card4 {
+         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.692)),
+                          url('images/1.webp');
+         background-size: cover;      
+         background-position: center;  
+         background-repeat: no-repeat;
+        }
+    .card5 {
+         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.692)),
+                           url('images/1.webp');
+         background-size: cover;      
+         background-position: center;  
+         background-repeat: no-repeat;
+        }
+    .card6 {
+         background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.692)),
+                           url('images/1.webp');
+         background-size: cover;      
+         background-position: center;  
+         background-repeat: no-repeat;
+        }
+
+.about{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.692)),
+                      url('images/sex3bg.jpg');
+    background-size: cover;      
+    background-position: center;  
+    background-repeat: no-repeat;
+    /* flex:2; */
+    background-color: #ffffff;
+    height: 400px;
+}
+
+    .about {
+        
+        padding: 60px 50px 0px 200px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+
+    .about div {
+
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin: 10px;
+        width: 1500px;
+        text-align: center;
+        height: 300px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .aboutcard {
+         background-image: url('images/Screenshot\ 2026-07-31\ 132838.png');
+         background-size: cover;      
+         background-position: center;  
+         background-repeat: no-repeat;
+        }
+
+footer{  
+    border-top:5px solid #9b0910;  
+    background-image: url('images/Screenshot\ 2026-07-31\ 133253.png');
+    background-size: cover;      
+    background-position: center;  
+    background-repeat: no-repeat;
+    height: 100px;
+}
