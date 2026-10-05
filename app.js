@@ -1,19 +1,12 @@
-/* ================================================================
-   Alex Mendoza — Portfolio App Logic
-   ================================================================
 
-   ★ PROFILE CONFIG — Edit this object to change all personal info.
-     The rest of the code reads from PROFILE, so you only update
-     content in one place.
-   ================================================================ */
 
 const PROFILE = {
-  name:        'Alex Mendoza',
-  initials:    'AM',
+  name:        'Garin, Edrian T.',
+  initials:    'GE',
   title:       'Student Developer & Aspiring Software Engineer',
   tagline:     'Building simple solutions to real-world problems.',
-  location:    'Ilocos Norte, Philippines',
-  email:       'alex.mendoza.dev@example.com',
+  location:    'Marilao, Bulacan',
+  email:       'garin.edrian@example.com',
   phone:       '+63 912 345 6789',
   github:      'https://github.com/alexmendoza',
   githubLabel: 'github.com/alexmendoza',
@@ -22,14 +15,14 @@ const PROFILE = {
   school:      'North Valley State University',
   course:      'Bachelor of Science in Information Technology',
   yearLevel:   '3rd Year',
-  gradYear:    2027,
+  gradYear:    2028,
 
   projects: [
     {
       number: '01',
       title:  'ACTIVITY 1',
       desc:   'A web-based pastry and fruit shake ordering and point-of-sale system designed to simplify order management, product management, and sales tracking.',
-      tech:   ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'],
+      tech:   ['HTML', 'CSS'],
       status: 'Completed',
       image:  'images\\Act1.png',
       viewUrl:   'Projects\\Garin_BSIT31_B_Act3\\Home.html',
@@ -39,7 +32,7 @@ const PROFILE = {
       number: '02',
       title:  'ACTIVITY 2',
       desc:   'A desktop-based hotel management application designed to manage rooms, customers, reservations, billing, and staff information through a centralized system.',
-      tech:   ['C#', '.NET', 'SQL Server'],
+      tech:   ['HTML', 'CSS'],
       status: 'Completed',
       image:  'images\\Act2.png',
       viewUrl:   'Projects\\Garin_Act2\\Home.html',
