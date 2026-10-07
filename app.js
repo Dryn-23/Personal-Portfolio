@@ -283,50 +283,6 @@ const PROFILE = {
     counters.forEach((counter) => observer.observe(counter));
   }
 
-  // ── Contact form validation ───────────────────────────────
-
-  const form = $('#contactForm');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let valid = true;
-
-    const name    = $('#contactName');
-    const email   = $('#contactEmail');
-    const message = $('#contactMessage');
-
-    // Reset
-    [name, email, message].forEach((el) => el.classList.remove('error'));
-    $$('.form-error', form).forEach((el) => (el.textContent = ''));
-
-    if (!name.value.trim()) {
-      name.classList.add('error');
-      $('#nameError').textContent = 'Please enter your name.';
-      valid = false;
-    }
-
-    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-      email.classList.add('error');
-      $('#emailError').textContent = 'Please enter a valid email address.';
-      valid = false;
-    }
-
-    if (!message.value.trim()) {
-      message.classList.add('error');
-      $('#messageError').textContent = 'Please enter a message.';
-      valid = false;
-    }
-
-    if (!valid) return;
-
-    // Simulate submission
-    const success = $('#formSuccess');
-    success.classList.remove('hidden');
-    form.reset();
-
-    setTimeout(() => success.classList.add('hidden'), 5000);
-  });
-
   // ── Keyboard accessibility: Escape closes mobile menu ─────
 
   document.addEventListener('keydown', (e) => {
@@ -338,6 +294,34 @@ const PROFILE = {
       hamburger.focus();
     }
   });
+
+  // ── Theme toggle (dark/light mode) ────────────────────────
+
+  const themeToggle = $('#themeToggle');
+  const root = document.documentElement;
+  const STORAGE_KEY = 'portfolio-theme';
+
+  function getPreferredTheme() {
+    return 'light';
+  }
+
+  function setTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    // localStorage.setItem(STORAGE_KEY, theme);
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    }
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Apply preferred theme on load
+    setTheme(getPreferredTheme());
+  }
 
   // ── Init ──────────────────────────────────────────────────
 

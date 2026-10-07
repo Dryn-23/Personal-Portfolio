@@ -38,6 +38,24 @@
   --transition:    0.25s ease;
 }
 
+:root[data-theme="dark"] {
+  --bg:            #0f1115;
+  --bg-alt:        #14171d;
+  --surface:       #1a1d23;
+  --text:          #e9eef4;
+  --text-secondary:#a3afbe;
+  --text-muted:    #6e7985;
+  --accent:        #6b8cff;
+  --accent-hover:  #5576f5;
+  --accent-light:  rgba(107, 140, 255, 0.09);
+  --border:        #2a2e36;
+  --border-light:  #22262d;
+  --error-border:  #ff6b6b;
+  --error-text:    #ff6b6b;
+  --success-text:  #4caf96;
+  --success-bg:    rgba(76, 175, 150, 0.1);
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
@@ -84,6 +102,10 @@ img {
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid transparent;
   transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+:root[data-theme="dark"] .navbar {
+  background: rgba(15, 17, 21, 0.92);
 }
 
 .navbar.scrolled {
@@ -919,7 +941,7 @@ a.contact-value:hover {
 
 .form-input.error,
 .form-textarea.error {
-  border-color: #e74c3c;
+  border-color: var(--error-border);
 }
 
 .form-textarea {
@@ -945,6 +967,12 @@ a.contact-value:hover {
   color: #2d8a56;
   background: rgba(45, 138, 86, 0.08);
   border-radius: var(--radius);
+}
+
+:root[data-theme="dark"] .form-error { color: var(--error-text); }
+:root[data-theme="dark"] .form-success {
+  color: var(--success-text);
+  background: var(--success-bg);
 }
 
 /* ── Footer ────────────────────────────────────────────────────── */
@@ -1036,6 +1064,56 @@ a.contact-value:hover {
   border-color: var(--accent);
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
+}
+
+/* ── Theme Toggle ──────────────────────────────────────────────── */
+
+.theme-toggle {
+  position: fixed;
+  top: 36px;
+  right: 36px;
+  width: 42px;
+  height: 42px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background-color var(--transition),
+              border-color var(--transition),
+              color var(--transition),
+              transform var(--transition);
+  z-index: 999;
+}
+
+.theme-toggle:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  transform: rotate(15deg) scale(1.05);
+}
+
+.theme-toggle:hover .icon-sun,
+.theme-toggle:hover .icon-moon {
+  color: #ffffff;
+}
+
+.theme-toggle .icon-sun { display: block; }
+.theme-toggle .icon-moon { display: none; }
+
+[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+
+/* On mobile: move toggle near the hamburger */
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 24px;
+    right: 18px;
+  }
 }
 
 /* ── Scroll progress bar ───────────────────────────────────────── */
@@ -1210,6 +1288,10 @@ a.contact-value:hover {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
+  }
+
+  :root[data-theme="dark"] .nav-links {
+    background: rgba(15, 17, 21, 0.98);
   }
 
   .nav-links.open {
